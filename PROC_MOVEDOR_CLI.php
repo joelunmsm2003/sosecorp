@@ -39,7 +39,7 @@
 			
 			          }
 $anexo=substr($numeroanexo,3);
-$link = mysql_connect("localhost","root","d4t4B4$3p3c4ll2016*"); if (!$link){ die('Could not connect: ' . mysql_error()); } mysql_select_db("perucall", $link);
+$link = mysql_connect("localhost","root","123"); if (!$link){ die('Could not connect: ' . mysql_error()); } mysql_select_db("predictivo", $link);
 mysql_query("UPDATE  ajx_pro_lla SET age_codigo=$agente,f_movedor=now(),v_tring=$anexo WHERE  id_ori_llamadas=$id_lla",$link); 
 mysql_query("UPDATE filtro SET ACD=ACD-1 WHERE campania=$cam",$link); 
 mysql_query("UPDATE agentes SET estado=3 WHERE id=$agente",$link); 

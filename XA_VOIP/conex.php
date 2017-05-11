@@ -4,7 +4,7 @@ function Conectarse(){
       echo "Error conectando a la base de datos.";
       exit();
    	}
-   	if (!mysql_select_db('perucall',$link)){
+   	if (!mysql_select_db('predictivo',$link)){
       echo "Error seleccionando la base de datos.";
       exit();
    	}

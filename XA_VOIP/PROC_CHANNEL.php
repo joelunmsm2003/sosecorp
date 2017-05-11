@@ -27,7 +27,7 @@
    if(trim($array[$i][8])==$uni  && $array[$i][1]=="from-seven"){
       echo $array[$i][0];
 
-     $con = mysql_connect("localhost","root","d4t4B4$3*"); if (!$con){ die('Could not connect: ' . mysql_error()); }   mysql_select_db("perucall", $con);
+     $con = mysql_connect("localhost","root","d4t4B4$3*"); if (!$con){ die('Could not connect: ' . mysql_error()); }   mysql_select_db("predictivo", $con);
      mysql_query("UPDATE ajx_pro_acd SET Channel_Entrante='".trim($array[$i][0])."' WHERE accountcode='".trim($uni)."'");
      mysql_query("UPDATE ajx_pro_lla SET canal1='".trim($array[$i][0])."' WHERE id_ori_llamadas='".trim($uni)."'");
      mysql_query("UPDATE agentes SET canal='".trim($array[$i][0])."' WHERE accountcode='".trim($uni)."'");

@@ -138,9 +138,9 @@ $estado=0; $uniqueid=0; $canal="";
 
   }
   $canal=trim($canal); $uniqueid=trim($uniqueid);
-  $con = mysql_connect("localhost","root","d4t4B4$3p3c4ll2016*");
+  $con = mysql_connect("localhost","root","123");
   if (!$con){ die('Could not connect: ' . mysql_error()); }
-  mysql_select_db("perucall", $con);
+  mysql_select_db("predictivo", $con);
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
   if($tipo==0){
     mysql_query("UPDATE  ajx_pro_lla SET llam_estado=$estado, llam_uniqueid='$uniqueid', canal2='$canal', audio='$audiofinal',f_llam_resuelve=now(), anexo=$ane, id_ori_seg_cola=$campana WHERE id_ori_llamadas = $id "); 

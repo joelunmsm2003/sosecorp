@@ -15,7 +15,7 @@ sub registros()
     @aval_id1="";@aval_id2="";@aval_id3=""; @aval_id4=""; @aval_id5="";
     @aval_id6="";@aval_id7="";@aval_id8=""; @aval_id9=""; @aval_id10="";
 #    print "----------INICIO-REGISTROS---------------\n";#print $var_campana."\n"; print $var_llamadas."\n";
-     $db="perucall";$host="localhost";$userid='root';$passwd='d4t4B4$3P3C4ll*';$connectionInfo="dbi:mysql:$db;$host";$dbh = DBI->connect($connectionInfo,$userid,$passwd);
+     $db="predictivo";$host="localhost";$userid='root';$passwd='d4t4B4$3P3C4ll*';$connectionInfo="dbi:mysql:$db;$host";$dbh = DBI->connect($connectionInfo,$userid,$passwd);
 #    $db="seven";$host="localhost";$userid='root';$passwd='s3rv3r';$connectionInfo="dbi:mysql:$db;$host";$dbh = DBI->connect($connectionInfo,$userid,$passwd);
     ($seg, $min, $hora, $dia, $mes, $anho, @zape) = localtime(time);$mes++;$anho+=1900;$dia="0".$dia if(length($dia)==1);$mes="0".$mes if(length($mes)==1);$fecha_actual= "$anho-$mes-$dia";
     $i=1;
