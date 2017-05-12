@@ -18,7 +18,7 @@ use DBI;
   @actual_cartera="";@aval_Agedisc="";@aval_Agefac="";@s_cart=""; @ciud="";@segm="";@grup="";@resu="";   @ciud1="";@segm1="";@grup1="";@resu1="";
 #----------------------------VERIFICA SI FILTRO ESTA ACTIVA status=0 y obtiene colas--------------------------------------------------------------------------------
 ##print "\n\n\n-----------------------------------------INICIO-------------------------------------------------------------\n";
- $query = "SELECT id,status FROM campania WHERE status=0 ORDER BY id ASC";
+ $query = "SELECT id_cu,status FROM tb_cartera WHERE status=0 ORDER BY id_cu ASC";
 
  $sth = $dbh->prepare($query);$sth->execute(); 
 
@@ -36,7 +36,7 @@ print 'colas...',$q;
 
 #----------------------------Obtiene discado y factor por campaña--------------------------------------------------------------------------------
 for($w=0;$w<$q;$w++){
-         $query = "SELECT discado,factor FROM campania WHERE  id=$camp[$w] ";
+         $query = "SELECT discado,factor FROM tb_cartera WHERE  id=$camp[$w] ";
 
          
          $sth = $dbh->prepare($query);$sth->execute(); $sth->bind_columns(\$val_discado,\$val_factor);
@@ -51,6 +51,8 @@ for($w=0;$w<$q;$w++){
          $d=0;
          $query = "SELECT b.anexo,a.agente,a.campania FROM agentescampanias a LEFT JOIN agentes b on a.agente=b.id WHERE  b.estado=2 and b.anexo<>'' and (b.est_ag_predictivo=0 OR b.est_ag_predictivo is NULL) and a.campania=$camp[$w]"; # and a.tipo_asig=2";
        
+         print $query; 
+
          $sth = $dbh->prepare($query);$sth->execute(); $sth->bind_columns(\$val_dip,\$val_idtrab,\$val_cartera);
          while($sth->fetch()) { @aval_Agedisc[$d]=$aval_discado[$w]; @aval_Agefac[$d]=$aval_factor[$w];
                                 
