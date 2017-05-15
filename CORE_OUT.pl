@@ -20,6 +20,8 @@ use DBI;
 ##print "\n\n\n-----------------------------------------INICIO-------------------------------------------------------------\n";
  $query = "SELECT id_cu,status FROM tb_cartera WHERE status=0 ORDER BY id_cu ASC";
 
+ print '999999',$query;
+
  $sth = $dbh->prepare($query);$sth->execute(); 
 
  $sth->bind_columns(\$camp,\$stat);
@@ -36,7 +38,9 @@ print 'colas...',$q;
 
 #----------------------------Obtiene discado y factor por campaña--------------------------------------------------------------------------------
 for($w=0;$w<$q;$w++){
-         $query = "SELECT discado,factor FROM tb_cartera WHERE  id=$camp[$w] ";
+         $query = "SELECT discado,factor FROM tb_cartera WHERE  id_cu='$camp[$w]'";
+
+         #print $query;
 
          
          $sth = $dbh->prepare($query);$sth->execute(); $sth->bind_columns(\$val_discado,\$val_factor);
@@ -47,11 +51,13 @@ for($w=0;$w<$q;$w++){
                     }
 #--------------------------------------VERIFICA SI HAY AGENTES DISPONIBLES---------------------------------------------------
 
+#  $query = "SELECT b.anexo,a.agente,a.campania FROM agentescampanias a LEFT JOIN agentes b on a.agente=b.id WHERE  b.estado=2 and b.anexo<>'' and (b.est_ag_predictivo=0 OR b.est_ag_predictivo is NULL) and a.campania=$camp[$w]"; # and a.tipo_asig=2";
+       
 for($w=0;$w<$q;$w++){
          $d=0;
-         $query = "SELECT b.anexo,a.agente,a.campania FROM agentescampanias a LEFT JOIN agentes b on a.agente=b.id WHERE  b.estado=2 and b.anexo<>'' and (b.est_ag_predictivo=0 OR b.est_ag_predictivo is NULL) and a.campania=$camp[$w]"; # and a.tipo_asig=2";
+         $query = "SELECT age_anexo,id_trab,age_cartera FROM tb_monitoreo  WHERE  age_estado=2 and age_anexo <>'' and (est_ag_predictivo=0 OR est_ag_predictivo is NULL) and age_cartera='$camp[$w]'"; # and a.tipo_asig=2";
        
-         print $query; 
+         #print $query;
 
          $sth = $dbh->prepare($query);$sth->execute(); $sth->bind_columns(\$val_dip,\$val_idtrab,\$val_cartera);
          while($sth->fetch()) { @aval_Agedisc[$d]=$aval_discado[$w]; @aval_Agefac[$d]=$aval_factor[$w];
@@ -99,9 +105,12 @@ for($w=0;$w<$q;$w++){
 
              if($aval_Agedisc[$f]==2){ 
                 print "---PrEdIcTiVo--------($f)($d)--------\n";
-                $query = "SELECT campania, id, telefono, agEnte,id_cliente FROM base WHERE (status='' or status=0) AND campania ='$actual_cartera[$f]' AND ProFlag is NULL AND ProEstado is NULL AND FiltroHdeC is NULL and blacklist=0 AND bloqueocliente=0 ORDER BY orden ASC, id ASC LIMIT 1"; $sth = $dbh->prepare($query);$sth->execute(); 
+
+                #$query = "SELECT campania, id, telefono, agEnte,id_cliente FROM base WHERE (status='' or status=0) AND campania ='$actual_cartera[$f]' AND ProFlag is NULL AND ProEstado is NULL AND FiltroHdeC is NULL and blacklist=0 AND bloqueocliente=0 ORDER BY orden ASC, id ASC LIMIT 1"; $sth = $dbh->prepare($query);$sth->execute(); 
                 
-                print $query;
+                $query = "SELECT id_cu, id, va_numero, id_trab, id_univ FROM tb_predictivo WHERE (status='' or status=0) AND id_cu ='$actual_cartera[$f]' AND ProFlag is NULL AND ProEstado is NULL AND FiltroHdeC is NULL and blacklist=0 AND bloqueocliente=0 ORDER BY orden ASC, id ASC LIMIT 1"; $sth = $dbh->prepare($query);$sth->execute(); 
+                
+                print 'iiiiii',$query;
 
                 $sth->bind_columns(\$val_campana,\$val_tregistro,\$val_tt1,\$val_agente,\$val_idcliente);
 #                $query = "SELECT campania, id, telefono, agEnte FROM base WHERE status='' AND campania ='$actual_cartera[$f]' AND ProFlag is NULL AND ProEstado is NULL AND FiltroHdeC is NULL ORDER BY id ASC LIMIT $cantPre"; $sth = $dbh->prepare($query);$sth->execute();
